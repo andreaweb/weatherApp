@@ -38,7 +38,7 @@
         case "Light Fog":
         case "Heavy Fog":
         case "Fog":
-        case "Haze:
+        case "Haze":
         case "Fog Patches":
         case "Light Fog Patches":
         case "Heavy Fog Patches":
