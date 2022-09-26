@@ -1,6 +1,5 @@
 function determineCityAndUnit(el) {
   var city = el.val();
-  console.log(city);
   var inactiveUnit = $('button.hidden')[0].id;
   var activeUnit;
   if (inactiveUnit == 'metric') {
@@ -13,7 +12,6 @@ function determineCityAndUnit(el) {
 }
 
 function getWeather(city, unit) {
-  console.log(city, unit);
      $.ajax({
          url: 'https://api.openweathermap.org/data/2.5/weather?q='+city+'&units='+unit+'&appid=7fc837143b359611d96b81379e7cb0f6',
          type: 'GET',
@@ -81,6 +79,7 @@ function getWeather(city, unit) {
               break;
         case "light rain":
         case "heavy rain":
+        case "moderate rain":
         case "rain":
         case "light rain mist":
         case "heavy rain mist":
@@ -135,11 +134,13 @@ function getWeather(city, unit) {
 
 getWeather('Berlin', 'metric');
 
-$('#city-input').on('change', function() {
-   determineCityAndUnit($(this));
-})
+$(document).ready(function() {
+ $('#city-input').on('change', function() {
+    determineCityAndUnit($(this));
+ })
 
-$("button").click(function(){
-   $("button").toggleClass("hidden");
-   determineCityAndUnit($('#city-input'));
+  $("button").on("click", function(){
+    $("button").toggleClass("hidden");
+    determineCityAndUnit($('#city-input'));
+  });
 });
