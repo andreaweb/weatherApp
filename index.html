@@ -2,60 +2,32 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>Weather App FCC - Revised - uses wunderground API</title>
-        <link rel="stylesheet" href="css/style.css">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/index.js"></script>
 </head>
 
 <body>
-  <body>
   <div class="container">
       <h1>Current Weather for</h1>
       <p class="cs-text" id="cs-text"> 
         <span id="city"></span> - <span id="main"></span><br>
         
-          Current Temperature: <span class="celsius"></span> <span class="farenheit hidden"></span>
-        <button>Display temperature in Farenheit</button>
+          Current Temperature: <span id="temperature"></span> 
+        <button id="metric">Currently displaying in Celsius. Change to Fahrenheit?</button>
+        <button id="imperial" class="hidden">Currently displaing in Fahrenheit. Change to Celsius?</button>
         <br>
       </p>
   </div>
   
   <aside>
     <h3>What is this?</h3>
-    <p>This is a project for Free Code Camp. It gets your location (according to an API that may not be very precise) and the corresponding weather. The background image will be displayed accordingly.</p>
+    <p>This is a project for Free Code Camp. The background image will be displayed according to the weather in the chosen city.</p>
     
-    <h3>I'm not seeing anything...</h3>
-    <p>For it to work you must allow your browser to see your location. Sometimes it won't ask, not sure why. Try reloading the page or opening it in another browser.</p>
+    <h3>Type your city name</h3>
+    <p>If it's invalid, it'll show the weather in the best city of the world instead.</p>
+    <input id='city-input' placeholder='Berlin'>
   </aside>
-</body>
-
-<!-- POSSIBLE WEATHER CONDITIONS 
-[Light/Heavy] Ice Crystals
-[Light/Heavy] Ice Pellets
-[Light/Heavy] Smoke
-[Light/Heavy] Volcanic Ash
-[Light/Heavy] Widespread Dust
-[Light/Heavy] Haze
-[Light/Heavy] Spray
-[Light/Heavy] Dust Whirls
-[Light/Heavy] Low Drifting Widespread Dust
-[Light/Heavy] Blowing Widespread Dust
-[Light/Heavy] Ice Pellet Showers
-[Light/Heavy] Thunderstorm
-[Light/Heavy] Thunderstorms and Rain
-[Light/Heavy] Thunderstorms and Snow
-[Light/Heavy] Thunderstorms and Ice Pellets
-[Light/Heavy] Thunderstorms with Hail
-[Light/Heavy] Thunderstorms with Small Hail
-Squalls
-Funnel Cloud
-Unknown Precipitation
-Unknown
--->
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  <script src="js/index.js"></script>
-
 </body>
 </html>

@@ -1,123 +1,145 @@
- if (navigator.geolocation) {
-   navigator.geolocation.getCurrentPosition(function(position) {
-     $("#data").html("latitude: " + position.coords.latitude + "<br>longitude: " + position.coords.longitude);
- //console.log('https://api.wunderground.com/api/aa718ba5596db9f8/conditions/q/' + position.coords.latitude + ',' + position.coords.longitude + '.json');
+function determineCityAndUnit(el) {
+  var city = el.val();
+  console.log(city);
+  var inactiveUnit = $('button.hidden')[0].id;
+  var activeUnit;
+  if (inactiveUnit == 'metric') {
+    activeUnit = 'imperial'
+  } else {
+    activeUnit = 'metric'
+  }
+  if (city) { getWeather(city, activeUnit) }
+  else { getWeather('Berlin', activeUnit) }
+}
+
+function getWeather(city, unit) {
+  console.log(city, unit);
      $.ajax({
-         url: 'https://api.wunderground.com/api/aa718ba5596db9f8/conditions/q/' + position.coords.latitude + ',' + position.coords.longitude + '.json',
+         url: 'https://api.openweathermap.org/data/2.5/weather?q='+city+'&units='+unit+'&appid=7fc837143b359611d96b81379e7cb0f6',
          type: 'GET',
          data: {},
          dataType: 'json',
          success: function(data) {
-           document.getElementById("city").innerHTML = data.current_observation.display_location.full;
-           var cel = data.current_observation.temp_c;
-           var far = data.current_observation.temp_f;
-           $(".farenheit").append(far + 'ºF <br>');
-           $(".celsius").append(cel + 'ºC <br>');
-           $("button").click(function(){
-             $(".celsius , .farenheit").toggleClass("hidden");
-             var current = document.getElementsByTagName("button")[0].innerHTML;
-             current == "Display temperature in Farenheit" ? 
-                document.getElementsByTagName("button")[0].innerHTML = "Display temperature in Celsius" : 
-                document.getElementsByTagName("button")[0].innerHTML = "Display temperature in Farenheit";
-           });
-           document.getElementById("main").innerHTML = data.current_observation.weather;
-           var conditions = data.current_observation.weather;
-    
+           console.log('success');
+         document.getElementById("city").innerHTML = city;
+           $("#temperature").empty().append(data.main.temp);
+           document.getElementById("main").innerHTML = data.weather[0].main;
+           var conditions = data.weather[0].description.toLowerCase();
+
       switch(conditions){
-        case "Overcast":
-        case "Mostly Cloudy": 
+        case "overcast":
+        case "mostly cloudy":
+        case "overcast clouds":
           $('body').css("background", "url(https://unsplash.it/1920/800?image=1064) no-repeat");
           break;
-        case "Scattered Clouds":
-        case "Partly Cloudy": 
+        case "scattered clouds":
+        case "partly cloudy": 
+        case "broken clouds":
+        case "few clouds":
           $('body').css("background", "url(https://unsplash.it/1920/800?image=1056) no-repeat");
           break;
-        case "Partial Fog":
-        case "Shallow Fog":
-        case "Patches of Fog": 
-        case "Light Fog":
-        case "Heavy Fog":
-        case "Fog":
-        case "Haze":
-        case "Fog Patches":
-        case "Light Fog Patches":
-        case "Heavy Fog Patches":
+        case "partial fog":
+        case "shallow fog":
+        case "patches of fog": 
+        case "light fog":
+        case "heavy fog":
+        case "haze":
+        case "fog":
+        case "fog patches":
+        case "light fog patches":
+        case "heavy fog patches":
               $('body').css("background", "url(https://unsplash.it/1920/800?image=1021) no-repeat");
               break;
-        case "Clear":
+        case "clear":
+        case "clear sky":
               $('body').css("background", "url(https://unsplash.it/1920/800?image=979) no-repeat");
               break;
-        case "Light Mist":
-        case "Heavy Mist":
-        case "Mist":
+        case "light mist":
+        case "heavy mist":
+        case "mist":
               $('body').css("background", "url(https://unsplash.it/1920/800?image=933) no-repeat");
               break;
-        case "Light Snow":
-        case "Heavy Snow":
-        case "Snow":
-        case "Light Snow Grains":
-        case "Heavy Snow Grains":
-        case "Snow Grains":
-        case "Light Snow Showers":
-        case "Heavy Snow Showers":
-        case "Snow Showers":
-        case "Light Snow Blowing Snow Mist":
-        case "Heavy Snow Blowing Snow Mist":
-        case "Snow Blowing Snow Mist":
-        case "Light Blowing Snow":
-        case "Heavy Blowing Snow":
-        case "Blowing Snow":
-        case "Light Low Drifting Snow":
-        case "Heavy Low Drifting Snow":
-        case "Low Drifting Snow":
+        case "light snow":
+        case "heavy snow":
+        case "snow":
+        case "light snow grains":
+        case "heavy snow grains":
+        case "snow grains":
+        case "light snow showers":
+        case "heavy snow showers":
+        case "snow showers":
+        case "light snow blowing snow mist":
+        case "heavy snow blowing snow mist":
+        case "snow blowing snow mist":
+        case "light blowing snow":
+        case "heavy blowing snow":
+        case "blowing snow":
+        case "light low drifting snow":
+        case "heavy low drifting snow":
+        case "low drifting snow":
               $('body').css("background", "url(https://unsplash.it/1920/800?image=726) no-repeat");
               break;
-        case "Light Rain":
-        case "Heavy Rain":
-        case "Rain":
-        case "Light Rain Mist":
-        case "Heavy Rain Mist":
-        case "Rain Mist":
-        case "Light Rain Showers":
-        case "Heavy Rain Showers":
-        case "Rain Showers":
-        case "Light Small Hail Showers":
-        case "Heavy Small Hail Showers":
-        case "Small Hail Showers":
-        case "Light Hail Showers":
-        case "Heavy Hail Showers":
-        case "Hail Showers":
-        case "Light Freezing Drizzle":
-        case "Heavy Freezing Drizzle":
-        case "Freezing Drizzle":
-        case "Light Freezing Rain":
-        case "Heavy Freezing Rain":
-        case "Freezing Rain":
-        case "Small Hail":
-        case "Light Drizzle":
-        case "Heavy Drizzle":
-        case "Drizzle":
-        case "Light Hail":
-        case "Heavy Hail":
-        case "Hail":
+        case "light rain":
+        case "heavy rain":
+        case "rain":
+        case "light rain mist":
+        case "heavy rain mist":
+        case "rain mist":
+        case "light rain showers":
+        case "heavy rain showers":
+        case "rain showers":
+        case "light small hail showers":
+        case "heavy small hail showers":
+        case "small hail showers":
+        case "light hail showers":
+        case "heavy hail showers":
+        case "light intensity shower rain":
+        case "hail showers":
+        case "light freezing drizzle":
+        case "light intensity drizzle":
+        case "Heavy freezing drizzle":
+        case "freezing drizzle":
+        case "light freezing rain":
+        case "heavy freezing rain":
+        case "freezing rain":
+        case "small hail":
+        case "light drizzle":
+        case "heavy drizzle":
+        case "drizzle":
+        case "light hail":
+        case "heavy hail":
+        case "hail":
           $('body').css("background", "url(https://unsplash.it/1920/800?image=232) no-repeat");
           break;
-        case "Light Sandstorm":
-        case "Heavy Sandstorm":
-        case "Sandstorm":
-        case "Light Blowing Sand":
-        case "Heavy Blowing Sand":
-        case "Blowing Sand":
-        case "Light Sand":
-        case "Heavy Sand":
-        case "Sand":
-        case "Light Low Drifting Sand":
-        case "Heavy Low Drifting Sand":
-        case "Low Drifting Sand":
+        case "light sandstorm":
+        case "heavy sandstorm":
+        case "sandstorm":
+        case "light blowing sand":
+        case "heavy blowing sand":
+        case "blowing sand":
+        case "light sand":
+        case "heavy sand":
+        case "sand":
+        case "light low drifting sand":
+        case "heavy low drifting sand":
+        case "low drifting sand":
           $('body').css("background", "url(https://unsplash.it/1920/800?image=196) no-repeat");
           break;
-           }
+        case "dust":
+          $('body').css("background", "url(https://unsplash.it/1920/800?image=137) no-repeat");
+          break;
+          }
          }
      });
-   })
- };
+   }
+
+getWeather('Berlin', 'metric');
+
+$('#city-input').on('change', function() {
+   determineCityAndUnit($(this));
+})
+
+$("button").click(function(){
+   $("button").toggleClass("hidden");
+   determineCityAndUnit($('#city-input'));
+});

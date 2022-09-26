@@ -1,7 +1,5 @@
 body{
 	font-family: 'Cantata One', 'Trebuchet MS', sans-serif;
-/*  background-repeat: no-repeat;
-  background-size:cover;*/
   display: flex;
   justify-content: space-around;
 }
